@@ -13,37 +13,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.unisul.pweb.quarta.domain.Categoria;
-import br.unisul.pweb.quarta.dtos.CategoriaDTO;
-import br.unisul.pweb.quarta.services.CategoriaService;
+import br.unisul.pweb.quarta.domain.Cidade;
+import br.unisul.pweb.quarta.dtos.CidadeDTO;
+import br.unisul.pweb.quarta.services.CidadeService;
 
-@RestController //trafegar informaçao no padrao Rest
-@RequestMapping(value="/categorias") //localhost:8080/categorias
-public class CategoriaResource {
 
-//	@RequestMapping(method=RequestMethod.GET)
-//	public List<Categoria> listar(){
-//		List<Categoria> lista = new ArrayList<Categoria>();
-//		lista.add(new Categoria(1, "Informática"));
-//		lista.add(new Categoria(2, "Camping"));
-//		lista.add(new Categoria(3, "Automobilística"));
-//		lista.add(new Categoria(4, "Lazer"));
-//		return lista;
-//	}
+@RestController //trafegar informaçao no padrao Rest, em formato json, entre chaves igual ao mod do mh
+@RequestMapping(value="/cidades") //localhost:8080/cidades
+public class CidadeResource {
+
 
 	@Autowired
-	private CategoriaService service; //objeto do tipo CategoriaService
+	private CidadeService service; //objeto do tipo CidadeService
 	
-	//BUSCAR POR ID localhost8080/categorias/id  ResponseEntity é o retorno do metodo que no caso é uma categoria 
+	//BUSCAR POR ID localhost8080/Cidades/id  ResponseEntity é o retorno do metodo que no caso é uma Cidade 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Categoria> find(@PathVariable Integer id){
-		Categoria obj = service.find(id);
+	public ResponseEntity<Cidade> find(@PathVariable Integer id){
+		Cidade obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//INSERIR post é salvar uma nova categoria 
+	//INSERIR post é salvar uma nova Cidade 
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void>insert(@RequestBody Categoria obj){
+	public ResponseEntity<Void>insert(@RequestBody Cidade obj){
 		obj = service.insert(obj);
 		//pega caminho atual e ve o objeto que foi inserido no banco
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -52,7 +44,7 @@ public class CategoriaResource {
 
 	//ATUALIZAR
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@RequestBody Cidade obj, @PathVariable Integer id){
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
@@ -60,6 +52,7 @@ public class CategoriaResource {
 
 	
 	//EXCLUIR
+	//passa pela URL o id do Cidade, entre chaves pois é um parametro
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
@@ -68,13 +61,14 @@ public class CategoriaResource {
 	
 	//LISTAR TODAS
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<Categoria> lista = service.findAll();
-		//List<CategoriaDTO> listaDTO = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList()); ou foreach para percorrer a lista 
-		List<CategoriaDTO> listaDTO = new ArrayList<CategoriaDTO>();
-		for (Categoria c : lista) {
-			listaDTO.add(new CategoriaDTO(c));
+	public ResponseEntity<List<CidadeDTO>> findAll() {
+		List<Cidade> lista = service.findAll();
+		List<CidadeDTO> listaDTO = new ArrayList<CidadeDTO>();
+		for (Cidade e : lista) {
+			listaDTO.add(new CidadeDTO(e));
 		}
 		return ResponseEntity.ok().body(listaDTO);
 	}
+	
+	
 }

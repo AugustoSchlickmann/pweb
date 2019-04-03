@@ -3,13 +3,12 @@ package br.unisul.pweb.quarta.services;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import br.unisul.pweb.quarta.domain.Estado;
 import br.unisul.pweb.quarta.repositories.EstadoRepository;
 import java.util.List;
 
 //ctrl+shfit+o para importar
-//
-
 
 @Service
 public class EstadoService {
@@ -45,4 +44,6 @@ public class EstadoService {
 	public List<Estado> findAll(){
 		return rep.findAll();
 	}
+
+
 }

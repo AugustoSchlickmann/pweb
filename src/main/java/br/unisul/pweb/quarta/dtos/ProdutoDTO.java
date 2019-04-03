@@ -2,38 +2,50 @@ package br.unisul.pweb.quarta.dtos;
 
 import java.io.Serializable;
 
-import br.unisul.pweb.quarta.domain.Categoria;
+import br.unisul.pweb.quarta.domain.Produto;
 
-public class CategoriaDTO implements Serializable {
-//DTO = DateObject
-	/**
-	 * 
-	 */
+public class ProdutoDTO implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private String nome;
-	
-	//clonar categoria, converte uma categoria em categoriaDTO
-	public CategoriaDTO (Categoria c) {
-		id = c.getId();
-		nome = c.getNome();
+	private Double preco;
+
+	public ProdutoDTO() {
+
 	}
-	
+
+	public ProdutoDTO(Produto obj) {
+		id = obj.getId();
+		nome = obj.getNome();
+		preco = obj.getPreco();
+	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -41,8 +53,7 @@ public class CategoriaDTO implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -51,7 +62,7 @@ public class CategoriaDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoriaDTO other = (CategoriaDTO) obj;
+		ProdutoDTO other = (ProdutoDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -59,6 +70,7 @@ public class CategoriaDTO implements Serializable {
 			return false;
 		return true;
 	}
+
 	
 	
 	

@@ -8,12 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-//pé de galinha, um estado tem varias cidade, relação de um para muitos
+
 @Entity
-public class Estado implements Serializable{
+public class Produto implements Serializable{
 	
 	/**
 	 * 
@@ -21,21 +23,26 @@ public class Estado implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
-	
 	private Integer id;
-	private String nome;
-	 
-	@JsonIgnore
-	@OneToMany(mappedBy="estado")
-	private List<Cidade> cidades = new ArrayList<>();
 	
-	public Estado() {
-	//construtor vazio nao sei pra que	
+	private String nome;
+	private Double preco;
+
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name ="PRODUTO_CATEGORIA",joinColumns = @JoinColumn(name = "produto_id"),
+	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	
+	private List<Categoria> categorias = new ArrayList<Categoria>();
+	
+	public Produto() {
+	//construtor vazio 
 	}
 
-	public Estado(Integer id, String nome) {
+	public Produto(Integer id, String nome, Double preco) {
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
 	
 	
@@ -54,24 +61,31 @@ public class Estado implements Serializable{
 		this.nome = nome;
 	}
 
-
-	public List<Cidade> getCidades() {
-		return cidades;
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
+
+	
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+	
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -81,18 +95,17 @@ public class Estado implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estado other = (Estado) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
 		return true;
 	}
+
 	
-}
+	}
+
+	
+	

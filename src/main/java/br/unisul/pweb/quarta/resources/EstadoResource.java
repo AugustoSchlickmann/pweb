@@ -3,6 +3,7 @@ package br.unisul.pweb.quarta.resources;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +14,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.unisul.pweb.quarta.domain.Cidade;
 import br.unisul.pweb.quarta.domain.Estado;
+import br.unisul.pweb.quarta.dtos.CidadeDTO;
 import br.unisul.pweb.quarta.dtos.EstadoDTO;
+import br.unisul.pweb.quarta.services.CidadeService;
 import br.unisul.pweb.quarta.services.EstadoService;
 
-@RestController //trafegar informaçao no padrao Rest
-@RequestMapping(value="/estados") //localhost:8080/Estados
+@RestController //trafegar informaçao no padrao Rest, em formato json, entre chaves igual ao mod do mh
+@RequestMapping(value="/estados") //localhost:8080/estados
 public class EstadoResource {
 
 
 	@Autowired
 	private EstadoService service; //objeto do tipo EstadoService
+	
+	@Autowired
+	private CidadeService cidadeService;
 	
 	//BUSCAR POR ID localhost8080/Estados/id  ResponseEntity é o retorno do metodo que no caso é uma Estado 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
@@ -51,6 +58,7 @@ public class EstadoResource {
 
 	
 	//EXCLUIR
+	//passa pela URL o id do estado, entre chaves pois é um parametro
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
@@ -67,5 +75,13 @@ public class EstadoResource {
 			listaDTO.add(new EstadoDTO(e));
 		}
 		return ResponseEntity.ok().body(listaDTO);
+	}
+	
+	//LISTAR CIDADES DE UM ESTADO
+	@RequestMapping(value="/{estadoId}/cidades", method=RequestMethod.GET)
+	public ResponseEntity<List<CidadeDTO>> findCidades(@PathVariable Integer estadoId) {
+		List<Cidade> list = cidadeService.findByEstado(estadoId);
+		List<CidadeDTO> listDto = list.stream().map(obj -> new CidadeDTO(obj)).collect(Collectors.toList());  
+		return ResponseEntity.ok().body(listDto);
 	}
 }
