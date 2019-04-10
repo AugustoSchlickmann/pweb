@@ -1,15 +1,14 @@
 package br.unisul.pweb.quarta.services;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import br.unisul.pweb.quarta.domain.Categoria;
 import br.unisul.pweb.quarta.repositories.CategoriaRepository;
-import java.util.List;
 
 //ctrl+shfit+o para importar
-//
-
 
 @Service
 public class CategoriaService {

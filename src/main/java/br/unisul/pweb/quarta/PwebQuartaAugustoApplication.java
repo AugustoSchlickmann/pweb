@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //dtos - representação dos objetos
 //repositories - interfaces
 //services - tudo que tem acesso ao banco de dados, fazem a manipulaçao do banco de dados
-//resources - porta de acesso dos serviços
+//resources - porta de acesso dos serviços, URL , chamada dos serviços pelo url
 //config - configuraços diversas ex: conectar mysql para desenvolvimento
 //JPA - API do java que faz persistencia no banco de dados
 
@@ -30,3 +30,10 @@ public class PwebQuartaAugustoApplication {
 //decodificar as urls que chegam para mim, tirar os % os ++ etc URLDecoder.decode
 
 //HashSet nao permite cadastros duplicados
+
+//FRONT END EM ANGULAR
+
+//***EXPLICAÇÃO DA TABELA ASSOCIATIVA ITEM_PEDIDO***
+//
+// 
+//

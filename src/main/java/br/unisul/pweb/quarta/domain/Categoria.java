@@ -27,7 +27,7 @@ public class Categoria implements Serializable{
 	private List<Produto> produtos = new ArrayList<>();
 	
 	public Categoria() {
-	//construtor vazio nao sei pra que	
+	//construtor vazio 	
 	}
 
 	public Categoria(Integer id, String nome) {

@@ -2,6 +2,7 @@ package br.unisul.pweb.quarta.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import br.unisul.pweb.quarta.domain.Categoria;
 import br.unisul.pweb.quarta.domain.Produto;
 
